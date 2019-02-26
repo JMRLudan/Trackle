@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags humanize %}
+
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'teachers:req_change_list' %}">My Requirements</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'teachers:requirement_change' requirement.pk %}">{{ requirement.name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Results</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">{{ requirement.name }} Results</h2>
+
+  <div class="card">
+    <div class="card-header">
+      <strong>Taken Requirements</strong>
+      <span class="badge badge-pill badge-primary float-right">Average Score: {{ requirement_score.average_score|default_if_none:0.0 }}</span>
+    </div>
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Date</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for taken_requirement in taken_requirements %}
+          <tr>
+            <td>{{ taken_requirement.student.user.username }}</td>
+            <td>{{ taken_requirement.date|naturaltime }}</td>
+            <td>{{ taken_requirement.score }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="card-footer text-muted">
+      Total respondents: <strong>{{ total_taken_requirements }}</strong>
+    </div>
+  </div>
+{% endblock %}

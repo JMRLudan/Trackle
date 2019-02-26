@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">My Requirements</li>
+    </ol>
+  </nav>
+  <h2 class="mb-3">My Requirements</h2>
+  <a href="{% url 'teachers:req_add' %}" class="btn btn-primary mb-3" role="button">Add a requirement</a>
+  <a href="{% url 'teachers:sub_add' %}" class="btn btn-primary mb-3" role="button">Create a subject</a>
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Requirement</th>
+          <th>Subject</th>
+          <th>Due Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for requirement in requirements %}
+          <tr>
+            <td class="align-middle"><a href="{% url 'teachers:requirement_change' requirement.pk %}">{{ requirement.name }}</a></td>
+            <td class="align-middle">{{ requirement.subject.get_html_badge }}</td>
+            <td class="align-middle">{{ requirement.duedate }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="5">You have no assigned requirements.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

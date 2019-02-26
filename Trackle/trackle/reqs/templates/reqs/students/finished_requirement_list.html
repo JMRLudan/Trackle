@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'reqs/students/_header.html' with active='taken' %}
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Requirement</th>
+          <th>Subject</th>
+          <th>Due Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for taken_requirement in taken_requirements %}
+          <tr>
+            <td>{{ taken_requirement.requirement.name }}</td>
+            <td>{{ taken_requirement.requirement.subject.get_html_badge }}</td>
+            <td>{{ taken_requirement.score }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="3">You haven't completed any requirements yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

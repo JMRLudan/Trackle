@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'reqs/students/_header.html' with active='new' %}
+  <div class="card">
+    <table class="table mb-0">
+      <thead>
+        <tr>
+          <th>Requirement</th>
+          <th>Subject</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for requirement in requirements %}
+          <tr>
+            <td class="align-middle">{{ requirement.name }}</td>
+            <td class="align-middle">{{ requirement.subject.get_html_badge }}</td>
+            <td class="align-middle">{{ requirement.duedate }}</td>
+            <td class="text-right">
+              <a href="{% url 'students:take_requirement' requirement.pk %}" class="btn btn-primary">Start requirement</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic" colspan="4">You have no requirements. Relax!</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
